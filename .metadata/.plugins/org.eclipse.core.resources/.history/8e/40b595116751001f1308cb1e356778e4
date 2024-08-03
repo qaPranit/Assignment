@@ -1,0 +1,39 @@
+package com.qa.fitPeo.baseTest;
+
+import org.testng.annotations.BeforeTest;
+
+import factory.DriverFactory;
+
+public class BaseTest {
+	
+	public WebDriver driver;
+	public DriverFactory df;
+	public HomePage hp;
+	public Properties prop;
+	public StartFr3Page sfp ;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@BeforeTest
+	public void setup() {
+		df = new DriverFactory();
+		prop = df.initProp();
+		driver = df.initDriver(prop);
+		hp = new HomePage(driver);
+	}
+	@AfterTest
+	public void tearDown() {
+		driver.quit();
+	}
+
+}

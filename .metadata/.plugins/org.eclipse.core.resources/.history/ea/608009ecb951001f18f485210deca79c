@@ -1,0 +1,181 @@
+package com.qa.fitPeo.pages;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.qa.fitPeo.util.ElementUtil;
+
+public class HomePage {
+	private WebDriver driver;
+	private ElementUtil eleUtil;
+	WebDriverWait wait;
+	JavascriptExecutor js;
+
+
+	//By locators
+	private By rc = By.xpath("//div[text()='Revenue Calculator']");
+	private By slider1 = By.xpath("//span[@class='MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary css-sy3s50']//input");
+	private By cpt = By.xpath("//div[@class='MuiBox-root css-4o8pys']//p[text() = 'CPT-99091']");
+	private By minMax = By.xpath("//span[text()='Patients should be between 0 to 2000']");
+	private By valueBox	= By.xpath("//div[@class='MuiFormControl-root MuiTextField-root css-1s5tg4z']//div//input");
+	private By checkBox_CPT_99091 = By.xpath("(//span[@class='MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-qb7d53']//input)[1]");
+	private By checkBox_CPT_99453 = By.xpath("(//span[@class='MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-qb7d53']//input)[1]");
+	private By checkBox_CPT_99454 = By.xpath("(//span[@class='MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-qb7d53']//input)[1]");
+	private By checkBox_CPT_99474 = By.xpath("(//span[@class='MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-qb7d53']//input)[5]");
+	private By reimbursement = By.xpath("(//p[@class='MuiTypography-root MuiTypography-body1 inter css-12bch19'])[3]");
+
+	//Constructor to get the driver
+	public HomePage(WebDriver driver) {
+		this.driver = driver;
+		eleUtil = new ElementUtil(driver);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		js = (JavascriptExecutor) driver;
+
+	}
+
+	//page actions
+	public String getHomePageTitle() {
+		String homePageTitle = driver.getTitle();
+		System.out.println(homePageTitle);
+		return homePageTitle;
+	}
+
+	public String getSliderValue() {
+		eleUtil.doClickWithPresenceOfElementLocatedt(rc);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+		String url = driver.getCurrentUrl();
+		System.out.println(url);
+
+
+		js.executeScript("window.scrollBy(0,500)"); // Scroll down by 1000 pixels
+		eleUtil.clickAndHoldWithAction(slider1, 93, 0);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+
+		js.executeScript("window.scrollBy(0,100)"); 
+		WebElement valueBoxElement = eleUtil.getElementByXpath(valueBox);
+		eleUtil.doClickWithActionsClass(valueBox);
+
+		js.executeScript("arguments[0].value='';", valueBoxElement);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+		//	valueBoxElement.clear();
+		eleUtil.doSendKeys(valueBox, "560");
+
+		String attributeValue = valueBoxElement.getAttribute("value"); // this is the attribute of the slider 
+		System.out.println(attributeValue);
+		return attributeValue;
+
+	}
+
+
+	//---------------------------------------------------------------------------
+
+
+
+
+	public String reimbursementValue() {
+		eleUtil.doClickWithPresenceOfElementLocatedt(rc);
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		String url = driver.getCurrentUrl();
+		System.out.println(url);
+
+
+		js.executeScript("window.scrollBy(0,500)"); // Scroll down by 1000 pixels
+		// eleUtil.getElementByXpath(Click).click();
+		eleUtil.clickAndHoldWithAction(slider1, 93, 0);
+		//	js.executeScript("arguments[0].value = arguments[1];", slider1, 93.5);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+
+		js.executeScript("window.scrollBy(0,100)"); 
+		WebElement valueBoxElement = eleUtil.getElementByXpath(valueBox);
+		eleUtil.doClickWithActionsClass(valueBox);
+
+		js.executeScript("arguments[0].value='';", valueBoxElement);
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+
+		eleUtil.doSendKeys(valueBox, "560");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+		js.executeScript("arguments[0].value='';", valueBoxElement);
+		eleUtil.doSendKeys(valueBox, "820");
+
+
+
+		eleUtil.doClickWithActionsClass(checkBox_CPT_99091);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		eleUtil.doClickWithActionsClass(checkBox_CPT_99453);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		eleUtil.doClickWithActionsClass(checkBox_CPT_99454);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		eleUtil.doClickWithActionsClass(checkBox_CPT_99474);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
+		}
+
+
+		String reimbursementValue = eleUtil.getElementByXpath(reimbursement).getText();
+		System.out.println(reimbursementValue);
+		return reimbursementValue;
+	}
+
+
+
+
+}
